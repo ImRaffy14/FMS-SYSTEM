@@ -1,5 +1,4 @@
-import type React from "react"
-import { Building, DoorOpen, Search, Filter, MoreVertical, Edit, Trash2, Eye, X, Loader2, Plus } from "lucide-react"
+import {  Search, Filter, MoreVertical, Edit, Trash2, Eye,  Plus } from "lucide-react"
 import { useState } from "react"
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,7 +15,6 @@ import { ConfirmationModal } from "@/components/ConfirmationModal"
 
 const RoomManagement = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false)
-  const [isEditRoomOpen, setIsEditRoomOpen] = useState(false)
   const [isViewRoomOpen, setIsViewRoomOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [selectedRoom, setSelectedRoom] = useState<any>(null)
@@ -169,7 +167,6 @@ const RoomManagement = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-2" onClick={() => {
                           setSelectedRoom(room)
-                          setIsEditRoomOpen(true)
                         }}>
                           <Edit size={16} />
                           Edit

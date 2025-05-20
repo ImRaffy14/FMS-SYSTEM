@@ -1,5 +1,4 @@
-import type React from "react"
-import { Calendar, Clock, Search, Filter, MoreVertical, Edit, Trash2, Eye, X, Loader2 } from "lucide-react"
+import { Calendar, Search, Filter, MoreVertical, Edit, Trash2, Eye } from "lucide-react"
 import { useState } from "react"
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,22 +15,9 @@ import { ConfirmationModal } from "@/components/ConfirmationModal"
 
 const FacultyLoadingSchedule = () => {
   const [isAddScheduleOpen, setIsAddScheduleOpen] = useState(false)
-  const [isEditScheduleOpen, setIsEditScheduleOpen] = useState(false)
   const [isViewScheduleOpen, setIsViewScheduleOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null)
-
-  const [newSchedule, setNewSchedule] = useState({
-    facultyId: "",
-    courseId: "",
-    subjectId: "",
-    roomId: "",
-    day: "",
-    startTime: "",
-    endTime: "",
-    semester: "",
-    academicYear: ""
-  })
 
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedDay, setSelectedDay] = useState("All")
@@ -175,7 +161,6 @@ const FacultyLoadingSchedule = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-2" onClick={() => {
                           setSelectedSchedule(schedule)
-                          setIsEditScheduleOpen(true)
                         }}>
                           <Edit size={16} />
                           Edit

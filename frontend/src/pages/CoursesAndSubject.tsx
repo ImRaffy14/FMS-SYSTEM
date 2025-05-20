@@ -1,5 +1,4 @@
-import type React from "react"
-import { BookOpen, Bookmark, Search, Filter, MoreVertical, Edit, Trash2, Eye, X, Loader2, Plus } from "lucide-react"
+import {  Search, Filter, MoreVertical, Edit, Trash2, Eye, Plus } from "lucide-react"
 import { useState } from "react"
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,7 +15,6 @@ import { ConfirmationModal } from "@/components/ConfirmationModal"
 
 const CoursesAndSubjectManagement = () => {
   const [isAddCourseOpen, setIsAddCourseOpen] = useState(false)
-  const [isEditCourseOpen, setIsEditCourseOpen] = useState(false)
   const [isViewCourseOpen, setIsViewCourseOpen] = useState(false)
   const [isAddSubjectOpen, setIsAddSubjectOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -226,7 +224,6 @@ const CoursesAndSubjectManagement = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-2" onClick={() => {
                           setSelectedItem(item)
-                          setIsEditCourseOpen(true)
                         }}>
                           <Edit size={16} />
                           Edit

@@ -1,4 +1,3 @@
-import type React from "react"
 import { Users, BookOpen, Clock, Calendar, Building, FileText, ArrowUp, ArrowDown, MoreVertical } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
