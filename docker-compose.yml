@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: fms-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5010:5010"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    networks:
+      - imraffy-network
+
+  frontend:
+    container_name: fms-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3010:3010"
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
+    networks:
+      - imraffy-network
+
+networks:
+  imraffy-network:
+    external: true

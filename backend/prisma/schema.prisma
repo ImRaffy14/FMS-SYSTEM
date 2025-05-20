@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String @unique
+  password    String
+  role        UserRole
+  image       Image?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  faculties   Faculty[]
+  documents   Document[] @relation("UserDocuments")
+}
+
+type Image {
+  imageUrl    String
+  publicId    String
+}
+
+model Faculty {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String   @unique
+  department  String
+  status      String   // Active, On Leave, Inactive
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  schedules   Schedule[]
+}
+
+model Course {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  code        String   @unique
+  name        String
+  description String?
+  department  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  subjects    Subject[]
+  schedules   Schedule[]
+}
+
+model Subject {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  code        String   @unique
+  name        String
+  description String?
+  credits     Int
+  courseId    String   @db.ObjectId
+  course      Course   @relation(fields: [courseId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  schedules   Schedule[]
+  
+  // Store prerequisite subject IDs as an array of strings
+  prerequisiteIds String[] @db.ObjectId
+}
+
+model Room {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  building    String
+  capacity    Int
+  type        String   // Classroom, Laboratory, etc.
+  equipment   String[]
+  status      String   // Available, Occupied, Maintenance
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  schedules   Schedule[]
+}
+
+model Schedule {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  facultyId   String   @db.ObjectId
+  faculty     Faculty  @relation(fields: [facultyId], references: [id])
+  courseId    String   @db.ObjectId
+  course      Course   @relation(fields: [courseId], references: [id])
+  subjectId   String   @db.ObjectId
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  roomId      String   @db.ObjectId
+  room        Room     @relation(fields: [roomId], references: [id])
+  day         String   // Monday, Tuesday, etc.
+  startTime   String
+  endTime     String
+  semester    String
+  academicYear String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+model Document {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  category    String
+  tags        String[]
+  fileUrl     String
+  fileType    String
+  fileSize    String
+  uploadedById String @db.ObjectId
+  uploadedBy  User     @relation(fields: [uploadedById], references: [id], name: "UserDocuments")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
